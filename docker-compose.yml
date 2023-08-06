@@ -1,0 +1,18 @@
+services:
+  server:
+    build: .
+    ports:
+      - "5000:5000"
+    x-develop:
+      watch:
+        - action: rebuild
+          path: ./src
+    secrets:
+      - VTClient
+      - VTSecret
+
+secrets:
+  VTClient:
+    environment: VTClient
+  VTSecret:
+    environment: VTSecret

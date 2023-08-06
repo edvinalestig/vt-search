@@ -9,6 +9,8 @@ use oauth2::{
     TokenResponse,
     TokenUrl
 };
+use std::fs;
+
 // use serde::{Serialize, Deserialize};
 // use serde::de::DeserializeOwned;
 use std::env;
@@ -33,8 +35,14 @@ pub async fn get_token() -> String {
 pub async fn update_token() -> AccessToken {
     println!("Updating token!");
 
-    let clientid = env::var("VTClient").expect("Did not find client id");
-    let clientsecret = env::var("VTSecret").expect("Did not find client secret");
+    let clientid = match env::var("VTClient") {
+        Ok(id) => id,
+        Err(_) => fs::read_to_string("/run/secrets/VTClient").unwrap()
+    };
+    let clientsecret = match env::var("VTSecret") {
+        Ok(secret) => secret,
+        Err(_) => fs::read_to_string("/run/secrets/VTSecret").unwrap()
+    };
     let token_url = TokenUrl::new("https://ext-api.vasttrafik.se/token".to_string())
         .expect("Invalid token url");
     
