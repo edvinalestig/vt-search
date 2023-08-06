@@ -10,20 +10,7 @@ use oauth2::{
     TokenUrl
 };
 use std::fs;
-
-// use serde::{Serialize, Deserialize};
-// use serde::de::DeserializeOwned;
 use std::env;
-// use reqwest::StatusCode;
-
-// const BASE_URL: &str = "https://ext-api.vasttrafik.se/pr/v4";
-
-// #[derive(Serialize, Deserialize, Debug)]
-// struct APIResponse {
-//     results: Vec<String>,
-//     pagination: String,
-//     links: Vec<String>
-// }
 
 pub async fn get_token() -> String {
     return match env::var("VTAccessToken") {
@@ -61,39 +48,3 @@ pub async fn update_token() -> AccessToken {
     env::set_var("VTAccessToken", token);
     return token_result.access_token().clone();
 }
-
-// async fn request<ResponseModel>(url: &str) -> ResponseModel 
-//         where ResponseModel: DeserializeOwned {
-//     let token = match env::var("VTAccessToken") {
-//         Ok(token) => token,
-//         Err(_) => update_token().await.secret().to_string()
-//     };
-//     let client = reqwest::Client::new();
-//     let response = client
-//         .get(BASE_URL.to_owned() + url)
-//         .header("AUTHORIZATION", "Bearer ".to_owned() + &token)
-//         .send()
-//         .await
-//         .expect("Something went wrong");
-//     let res = match response.status() {
-//         StatusCode::OK => response.json::<ResponseModel>().await.unwrap(),
-//         StatusCode::UNAUTHORIZED => {
-//                 let token2 = update_token().await.secret().to_string();
-//                 let response2 = client
-//                     .get(BASE_URL.to_owned() + url)
-//                     .header("AUTHORIZATION", "Bearer ".to_owned() + &token2)
-//                     .send()
-//                     .await
-//                     .expect("Something went wrong");
-//                 match response2.status() {
-//                     StatusCode::OK => response2.json::<ResponseModel>().await.unwrap(),
-//                     code => panic!("Could not get a response from VT: {:?}", code)
-//                 }
-//             },
-//         code => panic!("Could not get a response from VT: {:?}", code)
-//     };
-
-//     // let text = response.text().await.unwrap();
-
-//     return res;
-// }
