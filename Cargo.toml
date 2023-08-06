@@ -1,0 +1,18 @@
+[package]
+name = "vt_search"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = "0.6.20"
+oauth2 = "4.4.1"
+openapi = { path = "./openapi" }
+openssl = "0.10.55"
+openssl-sys = "0.9.90"
+reqwest = { version = "0.11.18", features = ["json"] }
+serde = { version = "1.0.182", features = ["derive"] }
+tera = "1.19.0"
+tokio = { version = "1.29.1", features = ["full"] }
+url = { version = "2.4.0", features = ["serde"] }
